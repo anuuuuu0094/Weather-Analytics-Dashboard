@@ -36,10 +36,8 @@ const PrecipitationChart = ({ hourlyData }) => {
           data={chartData}
           margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
         >
-          {/* softer grid — not flashy */}
           <CartesianGrid strokeDasharray="3 3" stroke="#ffffff14" />
 
-          {/* better tick spacing */}
           <XAxis
             dataKey="time"
             stroke="#cbd5e1"
@@ -55,7 +53,6 @@ const PrecipitationChart = ({ hourlyData }) => {
 
           <Tooltip content={<CustomTooltip />} />
 
-          {/* same color, just smoother radius */}
           <Bar
             dataKey="rain"
             fill="#60a5fa"
