@@ -1,0 +1,219 @@
+/* ============================================================
+   CITY DETAILS PAGE ONLY
+   (Does NOT affect Dashboard)
+============================================================ */
+
+/* ---------- TOP SECTION (LEFT + RIGHT) ---------- */
+
+.details-top {
+  display: flex;
+  gap: 28px;
+  width: 100%;
+  margin-bottom: 32px;
+  align-items: stretch;
+}
+
+/* ============================================================ 
+   LEFT SUMMARY CARD (GIF BACKGROUND)
+============================================================ */
+
+.summary-card {
+  flex: 1.05;
+  min-height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+
+  background-size: cover;
+  background-position: center;
+}
+
+/* Dark overlay for readability */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10,15,25,.75),
+    rgba(10,15,25,.35)
+  );
+}
+
+/* Inner content */
+.card-inner {
+  position: relative;
+  z-index: 2;
+  padding: 34px;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Location */
+.card-inner h1 {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.meta {
+  opacity: .7;
+  margin-bottom: 18px;
+}
+
+/* Temperature row */
+.hero-temp-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 24px 0;
+}
+
+.hero-temp-row img {
+  width: 64px;
+  height: 64px;
+}
+
+.hero-temp {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+  font-size: 14px;
+  opacity: .9;
+}
+
+/* ============================================================
+   RIGHT CHART PANEL
+============================================================ */
+
+.chart-card {
+  flex: 1;
+  border-radius: 20px;
+  padding: 24px;
+
+  background: rgba(10,15,25,.65);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================================
+   7 DAY FORECAST ROW
+============================================================ */
+
+.forecast-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.forecast-card {
+  flex: 1;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(10,15,25,.6);
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.forecast-card img {
+  width: 42px;
+}
+
+.forecast-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,.08);
+}
+
+.forecast-card.active {
+  background: rgba(255,255,255,.18);
+}
+
+.forecast-day {
+  font-size: 13px;
+  opacity: .7;
+}
+
+.forecast-temp {
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   HOURLY STRIP
+============================================================ */
+
+.hourly-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 30px;
+}
+
+.hour-card {
+  min-width: 90px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(10,15,25,.6);
+  text-align: center;
+}
+
+.hour-card img {
+  width: 36px;
+}
+
+.hour-card span {
+  font-size: 12px;
+  opacity: .7;
+}
+
+.glass-card{
+    width: 100%;
+}
+
+/* ============================================================
+   ANALYTICS SECTION
+============================================================ */
+
+.details-analytics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.chart-panel {
+  background: rgba(10,15,25,.65);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 1000px) {
+  .details-top {
+    flex-direction: column;
+  }
+
+  .details-analytics {
+    grid-template-columns: 1fr;
+  }
+
+  .forecast-row {
+    overflow-x: auto;
+  }
+}

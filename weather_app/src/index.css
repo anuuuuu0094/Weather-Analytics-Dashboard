@@ -1,0 +1,230 @@
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #eaf2ff;
+}
+
+/* =========================
+   BACKGROUND IMAGE
+========================= */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background: url("/bg.jpg") center center no-repeat;
+  background-size: cover;
+}
+
+.app-bg::after { 
+  content: ""; 
+  position: absolute; 
+  inset: 0; 
+  backdrop-filter: blur(5px); 
+  animation: floatLight 18s ease-in-out infinite alternate; }
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.app-container {
+  padding: 32px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* =========================
+   HERO HEADER
+========================= */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.hero-sub {
+  opacity: 0.7;
+  margin-top: 6px;
+}
+
+/* =========================
+   SEARCH + UNIT
+========================= */
+.hero-controls {
+  display: flex;
+  gap: 14px;
+  position: relative; 
+  z-index: 2000;  
+}
+
+.search-box {
+  position: relative;
+  width: 320px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #0f1a2e;
+  color: white;
+}
+
+.unit-btn {
+  padding: 12px 16px;
+  background: #0f1a2e;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+/* =========================
+   SEARCH DROPDOWN
+========================= */
+.search-dropdown {
+  position: absolute;
+  top: 46px;
+  width: 100%;
+  background: #0f1a2e;
+  border-radius: 10px;
+  padding: 6px;
+  z-index: 50;
+}
+
+.search-item {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* =========================
+   FEATURE SECTION (CARD + MAP)
+========================= */
+.feature-section {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 22px;
+  margin-bottom: 30px;
+}
+
+/* =========================
+   FEATURED CARD
+========================= */
+.feature-card {
+  height: 320px;
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+
+  background-size: cover;
+  background-position: center;
+}
+
+.feature-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10,15,25,.55);
+}
+
+.feature-content {
+  position: relative;
+  z-index: 2;
+}
+
+.feature-temp {
+  font-size: 46px;
+  font-weight: 700;
+  margin: 12px 0;
+}
+
+/* =========================
+   MAP
+========================= */
+.map-wrapper {
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* =========================
+   CITY GRID
+========================= */
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+  gap: 20px;
+}
+
+/* =========================
+   WEATHER CARD
+========================= */
+.weather-card {
+  height: 210px;
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: transform .25s ease;
+}
+
+.weather-card:hover {
+  transform: translateY(-4px);
+}
+
+.weather-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10,15,25,.6);
+}
+
+.weather-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.weather-temp {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.weather-meta {
+  font-size: 13px;
+  opacity: .7;
+}
+
