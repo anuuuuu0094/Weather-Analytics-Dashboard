@@ -9,8 +9,8 @@ export const getWeatherByCity = async (city) => {
       key: API_KEY,
       q: city,
       days: 7,
-      aqi: "no",
-      alerts: "no",
+      aqi: "yes",
+      alerts: "yes",
     },
   });
 

@@ -217,3 +217,49 @@
     overflow-x: auto;
   }
 }
+
+/* ===== LIFE INDEX CARD ===== */
+
+.life-card {
+  margin-top: 28px;
+  padding: 26px;
+  border-radius: 18px;
+  background: rgba(10,15,25,.65);
+}
+
+.life-card h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.life-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.life-grid span {
+  display: block;
+  font-size: 12px;
+  opacity: .6;
+}
+
+.life-grid strong {
+  font-size: 18px;
+}
+
+.aqi-box {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+}
+
+.advice-box {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  font-weight: 500;
+}
