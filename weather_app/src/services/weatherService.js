@@ -2,7 +2,7 @@ import axiosInstance from "./axiosInstance";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
-// ================= CURRENT + FORECAST =================
+// CURRENT + FORECAST 
 export const getWeatherByCity = async (city) => {
   const response = await axiosInstance.get("/forecast.json", {
     params: {
@@ -17,7 +17,7 @@ export const getWeatherByCity = async (city) => {
   return response.data;
 };
 
-// ================= SEARCH AUTOCOMPLETE =================
+// SEARCH AUTOCOMPLETE 
 export const searchCities = async (query) => {
   const response = await axiosInstance.get("/search.json", {
     params: {

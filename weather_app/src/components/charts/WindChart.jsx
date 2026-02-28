@@ -8,7 +8,6 @@ import {
   CartesianGrid,
 } from "recharts";
 
-/* ---------- Minimal Tooltip ---------- */
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
 
@@ -36,7 +35,6 @@ const WindChart = ({ hourlyData }) => {
           data={chartData}
           margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
         >
-          {/* subtle grid */}
           <CartesianGrid strokeDasharray="3 3" stroke="#ffffff14" />
 
           <XAxis
@@ -54,7 +52,6 @@ const WindChart = ({ hourlyData }) => {
 
           <Tooltip content={<CustomTooltip />} />
 
-          {/* clean analytical line */}
           <Line
             type="monotone"
             dataKey="wind"

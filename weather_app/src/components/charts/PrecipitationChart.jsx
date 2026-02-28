@@ -8,7 +8,6 @@ import {
   CartesianGrid,
 } from "recharts";
 
-/* ---------- Clean Tooltip (No Fancy UI) ---------- */
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
 

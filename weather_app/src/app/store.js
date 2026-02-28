@@ -10,11 +10,10 @@ import {
 
 import storage from "redux-persist/lib/storage"; // localStorage
 
-/* Persist Config */
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["weather", "favorites", "settings"], // kya save karna hai
+  whitelist: ["weather", "favorites", "settings"],
 };
 
 const persistedReducer = persistReducer(

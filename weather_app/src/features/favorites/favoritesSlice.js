@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load from localStorage
 const loadFavorites = () => {
   const data = localStorage.getItem("favorites");
   return data ? JSON.parse(data) : [];

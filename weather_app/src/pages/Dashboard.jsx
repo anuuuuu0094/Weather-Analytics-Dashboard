@@ -21,12 +21,10 @@ const Dashboard = () => {
   const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  // ⭐ Track which city should be featured
   const [activeCity, setActiveCity] = useState(null);
 
   const debouncedCity = useDebounce(city, 500);
 
-  /* ================= AUTOCOMPLETE ================= */
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (!debouncedCity.trim()) return setSuggestions([]);
@@ -42,30 +40,25 @@ const Dashboard = () => {
     fetchSuggestions();
   }, [debouncedCity]);
 
-  /* ================= SELECT CITY ================= */
   const handleSelectCity = (selectedCity) => {
     dispatch(fetchWeather(selectedCity));
 
-    // ⭐ Make searched city featured
     setActiveCity(selectedCity);
 
     setCity("");
     setSuggestions([]);
   };
 
-  /* ================= SORT CITIES ================= */
   const cityList = Object.values(cities).sort((a, b) => {
     const aFav = favoriteCities.includes(a.location.name);
     const bFav = favoriteCities.includes(b.location.name);
 
-    // ⭐ Favorites always first
     if (aFav && !bFav) return -1;
     if (!aFav && bFav) return 1;
 
     return a.location.name.localeCompare(b.location.name);
   });
 
-  /* ================= FEATURED CITY ================= */
   const featuredCity =
     cities[activeCity] || cityList[0] || null;
 
@@ -74,7 +67,6 @@ const Dashboard = () => {
       <div className="app-bg"></div>
 
       <div className="app-container">
-        {/* ================= HERO ================= */}
         <div className="hero">
           <div>
             <h1 className="hero-title">Weather Analytics</h1>
@@ -110,7 +102,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* ================= FEATURED SECTION ================= */}
         {featuredCity && (
           <div className="feature-section">
             {/* BIG CARD */}
@@ -152,7 +143,6 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* ================= OTHER CITIES ================= */}
         <div className="weather-grid">
           {cityList
             .filter(

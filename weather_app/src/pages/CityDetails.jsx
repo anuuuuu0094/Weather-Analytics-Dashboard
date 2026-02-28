@@ -39,10 +39,8 @@ const CityDetails = () => {
   const current = data.current;
   const dayInfo = selectedDay.day;
 
-  // 🎬 GIF only for left summary card
   const cardGif = getWeatherImage(dayInfo.condition.text);
 
-  /* ===================== SMART INSIGHTS ===================== */
 
   const getAQILabel = (pm25) => {
     if (!pm25) return { label: "N/A", color: "#ccc" };
@@ -70,14 +68,12 @@ const CityDetails = () => {
 
   const outdoorAdvice = getOutdoorAdvice();
 
-  /* ===================== UI ===================== */
 
   return (
     <>
       <div className="app-bg"></div>
 
       <div className="app-container">
-        {/* BACK BUTTON */}
         <button
           className="unit-btn"
           style={{ marginBottom: 24 }}
@@ -86,9 +82,7 @@ const CityDetails = () => {
           ← Back to Dashboard
         </button>
 
-        {/* ================= TOP SECTION ================= */}
         <div className="details-top">
-          {/* LEFT SUMMARY CARD */}
           <div
             className="summary-card"
             style={{ backgroundImage: `url(${cardGif})` }}
@@ -120,13 +114,11 @@ const CityDetails = () => {
             </div>
           </div>
 
-          {/* RIGHT TEMPERATURE CHART */}
           <div className="chart-card">
             <TemperatureChart hourlyData={hourlyData} unit={unit} />
           </div>
         </div>
 
-        {/* ================= 7 DAY FORECAST ================= */}
         <div className="forecast-row">
           {forecastDays.map((day, index) => {
             const dateObj = new Date(day.date);
@@ -153,7 +145,6 @@ const CityDetails = () => {
           })}
         </div>
 
-        {/* ================= HOURLY ================= */}
         <div className="hourly-row">
           {hourlyData.slice(0, 24).map((hour) => (
             <div key={hour.time} className="hour-card">
@@ -164,7 +155,6 @@ const CityDetails = () => {
           ))}
         </div>
 
-        {/* ================= ANALYTICS ================= */}
         <div className="details-analytics">
           <div className="chart-panel">
             <PrecipitationChart hourlyData={hourlyData} />
@@ -175,7 +165,6 @@ const CityDetails = () => {
           </div>
         </div>
 
-        {/* ================= LIFE INDEX (NEW PREMIUM SECTION) ================= */}
         <div className="life-card">
           <h2>Comfort & Safety Index</h2>
 

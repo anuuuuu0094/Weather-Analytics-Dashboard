@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getWeatherByCity } from "../../services/weatherService";
 import { getCachedData, setCachedData } from "../../services/cacheService";
 
-// Async thunk with caching
 export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
   async (city) => {

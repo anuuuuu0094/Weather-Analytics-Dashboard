@@ -8,7 +8,6 @@ import {
   CartesianGrid,
 } from "recharts";
 
-/* ---------- Minimal Tooltip ---------- */
 const CustomTooltip = ({ active, payload, label, unit }) => {
   if (!active || !payload?.length) return null;
 
@@ -39,7 +38,6 @@ const TemperatureChart = ({ hourlyData, unit }) => {
           data={chartData}
           margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
         >
-          {/* subtle grid */}
           <CartesianGrid strokeDasharray="3 3" stroke="#ffffff14" />
 
           <XAxis
@@ -57,7 +55,6 @@ const TemperatureChart = ({ hourlyData, unit }) => {
 
           <Tooltip content={<CustomTooltip unit={unit} />} />
 
-          {/* smooth clean line */}
           <Line
             type="monotone"
             dataKey="temp"
