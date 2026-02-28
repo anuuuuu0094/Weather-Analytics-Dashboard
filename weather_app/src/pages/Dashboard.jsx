@@ -21,6 +21,9 @@ const Dashboard = () => {
   const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
+  // ⭐ Track which city should be featured
+  const [activeCity, setActiveCity] = useState(null);
+
   const debouncedCity = useDebounce(city, 500);
 
   /* ================= AUTOCOMPLETE ================= */
@@ -39,141 +42,179 @@ const Dashboard = () => {
     fetchSuggestions();
   }, [debouncedCity]);
 
+  /* ================= SELECT CITY ================= */
   const handleSelectCity = (selectedCity) => {
     dispatch(fetchWeather(selectedCity));
+
+    // ⭐ Make searched city featured
+    setActiveCity(selectedCity);
+
     setCity("");
     setSuggestions([]);
   };
 
-  const cityList = Object.values(cities);
-  const lastCity = cityList[cityList.length - 1];
+  /* ================= SORT CITIES ================= */
+  const cityList = Object.values(cities).sort((a, b) => {
+    const aFav = favoriteCities.includes(a.location.name);
+    const bFav = favoriteCities.includes(b.location.name);
 
- return (
-  <>
-    <div className="app-bg"></div>
+    // ⭐ Favorites always first
+    if (aFav && !bFav) return -1;
+    if (!aFav && bFav) return 1;
 
-    <div className="app-container">
-      {/* ================= HERO ================= */}
-      <div className="hero">
-        <div>
-          <h1 className="hero-title">Weather Analytics</h1>
-          <p className="hero-sub">Explore live weather conditions.</p>
-        </div>
+    return a.location.name.localeCompare(b.location.name);
+  });
 
-        <div className="hero-controls">
-          <div className="search-box">
-            <input
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="Search city..."
-            />
+  /* ================= FEATURED CITY ================= */
+  const featuredCity =
+    cities[activeCity] || cityList[0] || null;
 
-            {suggestions.length > 0 && (
-              <div className="search-dropdown">
-                {suggestions.map((item) => (
-                  <div
-                    key={item.id}
-                    className="search-item"
-                    onClick={() => handleSelectCity(item.name)}
-                  >
-                    {item.name}, {item.country}
-                  </div>
-                ))}
-              </div>
-            )}
+  return (
+    <>
+      <div className="app-bg"></div>
+
+      <div className="app-container">
+        {/* ================= HERO ================= */}
+        <div className="hero">
+          <div>
+            <h1 className="hero-title">Weather Analytics</h1>
+            <p className="hero-sub">Explore live weather conditions.</p>
           </div>
 
-          <button onClick={() => dispatch(toggleUnit())} className="unit-btn">
-            °{unit}
-          </button>
-        </div>
-      </div>
+          <div className="hero-controls">
+            <div className="search-box">
+              <input
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Search city..."
+              />
 
-      {/* ================= FEATURED SECTION ================= */}
-      {lastCity && (
-        <div className="feature-section">
-          {/* LEFT : BIG WEATHER CARD */}
-          <div
-            className="feature-card"
-            style={{
-              backgroundImage: `url(${getWeatherImage(
-                lastCity.current.condition.text
-              )})`,
-            }}
-            onClick={() => navigate(`/city/${lastCity.location.name}`)}
-          >
-            <div className="feature-content">
-              <h2>{lastCity.location.name}</h2>
-
-              <img src={lastCity.current.condition.icon} />
-
-              <div className="feature-temp">
-                {convertTemp(lastCity.current.temp_c, unit)}
-              </div>
-
-              <p>{lastCity.current.condition.text}</p>
-
-              <p className="weather-meta">
-                Humidity {lastCity.current.humidity}% • Wind{" "}
-                {lastCity.current.wind_kph} kph
-              </p>
+              {suggestions.length > 0 && (
+                <div className="search-dropdown">
+                  {suggestions.map((item) => (
+                    <div
+                      key={item.id}
+                      className="search-item"
+                      onClick={() => handleSelectCity(item.name)}
+                    >
+                      {item.name}, {item.country}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
+            <button onClick={() => dispatch(toggleUnit())} className="unit-btn">
+              °{unit}
+            </button>
           </div>
-
-          {/* RIGHT : MAP */}
-          <WeatherMap
-            lat={lastCity.location.lat}
-            lon={lastCity.location.lon}
-            name={lastCity.location.name}
-          />
         </div>
-      )}
 
-      {/* ================= ALL OTHER CITIES ================= */}
-      <div className="weather-grid">
-        {cityList.slice(0, -1).map((data) => {
-          const bg = getWeatherImage(data.current.condition.text);
-          const cityName = data.location.name;
-          const isFavorite = favoriteCities.includes(cityName);
-
-          return (
+        {/* ================= FEATURED SECTION ================= */}
+        {featuredCity && (
+          <div className="feature-section">
+            {/* BIG CARD */}
             <div
-              key={cityName}
-              className="weather-card"
-              style={{ backgroundImage: `url(${bg})` }}
-              onClick={() => navigate(`/city/${cityName}`)}
+              className="feature-card"
+              style={{
+                backgroundImage: `url(${getWeatherImage(
+                  featuredCity.current.condition.text
+                )})`,
+              }}
+              onClick={() =>
+                navigate(`/city/${featuredCity.location.name}`)
+              }
             >
-              <div className="weather-card-content">
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <strong>{cityName}</strong>
+              <div className="feature-content">
+                <h2>{featuredCity.location.name}</h2>
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(toggleFavorite(cityName));
-                    }}
-                  >
-                    {isFavorite ? "★" : "☆"}
-                  </button>
+                <img src={featuredCity.current.condition.icon} />
+
+                <div className="feature-temp">
+                  {convertTemp(featuredCity.current.temp_c, unit)}
                 </div>
 
-                <img src={data.current.condition.icon} />
+                <p>{featuredCity.current.condition.text}</p>
 
-                <div className="weather-temp">
-                  {convertTemp(data.current.temp_c, unit)}
-                </div>
-
-                <div className="weather-meta">
-                  {data.current.condition.text}
-                </div>
+                <p className="weather-meta">
+                  Humidity {featuredCity.current.humidity}% • Wind{" "}
+                  {featuredCity.current.wind_kph} kph
+                </p>
               </div>
             </div>
-          );
-        })}
+
+            {/* MAP */}
+            <WeatherMap
+              lat={featuredCity.location.lat}
+              lon={featuredCity.location.lon}
+              name={featuredCity.location.name}
+            />
+          </div>
+        )}
+
+        {/* ================= OTHER CITIES ================= */}
+        <div className="weather-grid">
+          {cityList
+            .filter(
+              (c) => c.location.name !== featuredCity?.location.name
+            )
+            .map((data) => {
+              const cityName = data.location.name;
+              const isFavorite = favoriteCities.includes(cityName);
+
+              return (
+                <div
+                  key={cityName}
+                  className="weather-card"
+                  style={{
+                    backgroundImage: `url(${getWeatherImage(
+                      data.current.condition.text
+                    )})`,
+                  }}
+                  onClick={() => {
+                    setActiveCity(cityName); // ⭐ bring to featured
+                    navigate(`/city/${cityName}`);
+                  }}
+                >
+                  <div className="weather-card-content">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <strong>{cityName}</strong>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(toggleFavorite(cityName));
+                        }}
+                      >
+                        {isFavorite ? "★" : "☆"}
+                      </button>
+                    </div>
+
+                    <img src={data.current.condition.icon} />
+
+                    <div className="weather-temp">
+                      {convertTemp(data.current.temp_c, unit)}
+                    </div>
+
+                    <div className="weather-meta">
+                      {data.current.condition.text}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+
+        {loading && <p>Loading weather...</p>}
+        {error && <p style={{ color: "tomato" }}>{error}</p>}
       </div>
-    </div>
-  </>
-);
+    </>
+  );
 };
 
 export default Dashboard;
